@@ -57,8 +57,8 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
-      - run: yarn global add now --unsafe-perm
+      - run: npm install
+      - run: npm i -g --unsafe-perm now
 
       - save_cache:
           paths:
