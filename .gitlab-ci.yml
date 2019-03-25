@@ -1,0 +1,24 @@
+image: node:latest
+
+stages:
+  - test
+  - production
+
+test:
+  stage: test
+  script:
+    - npm i npm@latest -g
+    - npm i jest -g
+    - npm i
+    - npm test
+
+production:
+  type: deploy
+  stage: production
+  script:
+    - npm i npm@latest -g
+    - npm i -g --unsafe-perm now
+    - npm i
+    - now --token=$NOW_TOKEN -A ./now.json && now alias --token=$NOW_TOKEN -A ./now.json
+  only:
+    - master
