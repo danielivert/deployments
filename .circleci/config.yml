@@ -58,7 +58,7 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-      - run: npm i -g --unsafe-perm now
+      - run: sudo npm i -g --unsafe-perm now
 
       - save_cache:
           paths:
