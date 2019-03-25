@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "deploy-to-now",
+  "alias": "test.ineed.pizza",
+  "builds": [{ "src": "package.json", "use": "@now/next" }]
+}
