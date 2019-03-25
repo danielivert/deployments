@@ -4,8 +4,6 @@
 #
 version: 2
 jobs:
-  - test
-  - deploy
   test:
     docker:
       # specify the version you desire here
@@ -60,7 +58,7 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
-      - run: yarn global add now --unsafe-perm 
+      - run: yarn global add now --unsafe-perm
 
       - save_cache:
           paths:
