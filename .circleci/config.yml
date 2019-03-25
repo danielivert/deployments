@@ -4,7 +4,9 @@
 #
 version: 2
 jobs:
-  build:
+  - test
+  - deploy
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.10
@@ -35,3 +37,35 @@ jobs:
 
       # run tests!
       - run: yarn test
+  deploy:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.10
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+      - run: yarn global add now --unsafe-perm 
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      - run: now --token=$NOW_TOKEN -A ./now.json && now alias --token=$NOW_TOKEN -A ./now.json
